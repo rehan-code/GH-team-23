@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gh_app/core/listings.dart';
+import 'package:gh_app/view/pages/assets/confirm_pickup.dart';
 import 'dart:io';
 import 'package:gh_app/view/pages/assets/item_page.dart';
 
 //Need to modify account class to include a list of your personally lent items, using listing is just temporary
+//Need to maintain 2 lists, a rented list and a lent list
 
 class MyLent extends StatefulWidget {
   const MyLent({super.key});
@@ -53,7 +55,7 @@ class _MyLentItemsPage extends State<MyLent>{
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ItemPage(
+                              builder: (context) => ConfirmPickup(
                                 listing: listing,
                               ))),
                       child: Card(
