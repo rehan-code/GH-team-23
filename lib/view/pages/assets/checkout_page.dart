@@ -111,6 +111,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       child: Text(
                         "Rental Period",
                     // "Select your renting duration between ${widget.listing.startTime.year}-${widget.listing.startTime.month}-${widget.listing.startTime.day} and ${widget.listing.endTime.year}-${widget.listing.endTime.month}-${widget.listing.endTime.day}",
+
                     style: TextStyle(fontSize: 16),
                   ))
                 ],

@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 40),
                   Text(
-                    'Welcome to Render',
+                    'Lendr',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         // color: Colors.black,
