@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  camera:
+  path_provider:
+  path:
+  image_picker: ^0.8.7+5
 
   animated_bottom_navigation_bar: ^1.2.0
   auto_size_text: ^3.0.0

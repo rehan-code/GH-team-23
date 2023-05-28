@@ -2,6 +2,9 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gh_app/view/pages/assets/listings_page.dart';
+import 'package:gh_app/view/pages/assets/post_page.dart';
+import 'package:gh_app/view/pages/assets/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -97,7 +100,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       // ),
       body: NotificationListener<ScrollNotification>(
         onNotification: onScrollNotification,
-        child: NavigationScreen(iconList[_bottomNavIndex]),
+        child: NavigationScreen(_bottomNavIndex),
       ),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
@@ -110,6 +113,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           _borderRadiusAnimationController.reset();
           _borderRadiusAnimationController.forward();
           _fabAnimationController.forward();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => PostPage()));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -164,9 +169,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 }
 
 class NavigationScreen extends StatefulWidget {
-  final IconData iconData;
+  final int index;
 
-  NavigationScreen(this.iconData) : super();
+  NavigationScreen(this.index) : super();
 
   @override
   _NavigationScreenState createState() => _NavigationScreenState();
@@ -177,39 +182,39 @@ class _NavigationScreenState extends State<NavigationScreen>
   late AnimationController _controller;
   late Animation<double> animation;
 
-  @override
-  void didUpdateWidget(NavigationScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.iconData != widget.iconData) {
-      _startAnimation();
-    }
-  }
+  // @override
+  // void didUpdateWidget(NavigationScreen oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (oldWidget.index != widget.index) {
+  //     // _startAnimation();
+  //   }
+  // }
 
-  @override
-  void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1000),
-    );
-    animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-    _controller.forward();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   _controller = AnimationController(
+  //     vsync: this,
+  //     duration: Duration(milliseconds: 1000),
+  //   );
+  //   animation = CurvedAnimation(
+  //     parent: _controller,
+  //     curve: Curves.easeIn,
+  //   );
+  //   _controller.forward();
+  //   super.initState();
+  // }
 
-  _startAnimation() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1000),
-    );
-    animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-    _controller.forward();
-  }
+  // _startAnimation() {
+  //   _controller = AnimationController(
+  //     vsync: this,
+  //     duration: Duration(milliseconds: 1000),
+  //   );
+  //   animation = CurvedAnimation(
+  //     parent: _controller,
+  //     curve: Curves.easeIn,
+  //   );
+  //   _controller.forward();
+  // }
 
   @override
   void dispose() {
@@ -222,7 +227,8 @@ class _NavigationScreenState extends State<NavigationScreen>
     // final colors = Theme.of(context).extension<CustomColorsTheme>()!;
     return Container(
       color: Theme.of(context).colorScheme.background,
-      child: Text('yes'),
+      child:
+          SafeArea(child: widget.index == 0 ? ListingsPage() : ProfilePage()),
       // child: ListView(
       //   children: [
       //     SizedBox(height: 64),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/accounts.dart';
+import 'package:gh_app/core/constants.dart';
+import 'package:gh_app/view/pages/assets/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,18 +22,34 @@ class _LoginPageState extends State<LoginPage> {
     passwordController.dispose();
   }
 
+  void login() {
+    // if (_formKey.currentState!.validate()) {
+    //   for (var element in accounts) {
+    //     if (element.email == emailController.text &&
+    //         element.password == passwordController.text) {
+    //       Navigator.push(
+    //           context, MaterialPageRoute(builder: (context) => HomePage()));
+    //     }
+    //     context.showErrorSnackBar(message: 'Invalid Account');
+    //   }
+    // }
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Form(
               key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
@@ -43,10 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Email',
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
+                    TextFormField(
                       controller: passwordController,
                       keyboardType: TextInputType.text,
                       obscureText: true,
@@ -60,21 +76,21 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Password',
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ElevatedButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            )),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 20),
-                        )),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ElevatedButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              )),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    )
+                  ],
+                ),
               ))),
     );
   }

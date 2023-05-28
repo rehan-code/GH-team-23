@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/account.dart';
+import 'package:gh_app/core/accounts.dart';
 import 'package:gh_app/core/constants.dart';
+import 'package:gh_app/view/pages/assets/login_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -10,7 +13,6 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   var nameController = TextEditingController();
-  var lastNameController = TextEditingController();
   var phoneController = TextEditingController();
   var dobController = TextEditingController();
   var emailController = TextEditingController();
@@ -25,9 +27,24 @@ class _SignupPageState extends State<SignupPage> {
     passwordController.dispose();
     confirmPasswordController.dispose();
     nameController.dispose();
-    lastNameController.dispose();
     dobController.dispose();
     phoneController.dispose();
+  }
+
+  void signup() {
+    if (_formKey.currentState!.validate()) {
+      Account account = Account(nameController.text, emailController.text,
+          passwordController.text, phoneController.text);
+      accounts.add(account);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage(),
+          ));
+      if (mounted) {
+        context.showSnackBar(message: 'Account successfully created');
+      }
+    }
   }
 
   @override
@@ -54,23 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                         return null;
                       },
                       decoration: const InputDecoration(
-                        labelText: 'First Name',
-                      ),
-                    ),
-                    TextFormField(
-                      controller: lastNameController,
-                      keyboardType: TextInputType.name,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "required";
-                        }
-                        if (!RegExp(r"^[A-Za-z ,.'-]+$").hasMatch(value)) {
-                          return "Enter a valid name";
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        labelText: 'Last Name',
+                        labelText: 'Full Name',
                       ),
                     ),
                     TextFormField(
@@ -83,6 +84,11 @@ class _SignupPageState extends State<SignupPage> {
                         if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                             .hasMatch(value)) {
                           return "Please Enter a valid email";
+                        }
+                        for (var element in accounts) {
+                          if (element.email == value) {
+                            return "account already exists";
+                          }
                         }
                         return null;
                       },
@@ -98,10 +104,16 @@ class _SignupPageState extends State<SignupPage> {
                         if (value == null || value.isEmpty) {
                           return "required";
                         }
+                        // if (!RegExp(
+                        //         r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[*.!@#$%^&(){}[\]:;<>,.?/~_+\-=|]).{8,32}$')
+                        //     .hasMatch(value)) {
+                        //   return "Password Requirements:\n1 number\n1 lowercase letter\n1 uppercase letter\n1 special character\ncharacter length 8-32";
+                        // }
+
                         if (!RegExp(
-                                r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[*.!@#$%^&(){}[\]:;<>,.?/~_+\-=|]).{8,32}$')
+                                r"^[A-Za-z0-9*.!@#$%^&(){}[\]:;<>,.?/~_+\-=|]+$")
                             .hasMatch(value)) {
-                          return "Password Requirements:\n1 number\n1 lowercase letter\n1 uppercase letter\n1 special character\ncharacter length 8-32";
+                          return "Enter a valid password";
                         }
                         return null;
                       },
@@ -117,10 +129,11 @@ class _SignupPageState extends State<SignupPage> {
                         if (value == null || value.isEmpty) {
                           return "required";
                         }
+
                         if (!RegExp(
-                                r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[*.!@#$%^&(){}[\]:;<>,.?/~_+\-=|]).{8,32}$')
+                                r"^[A-Za-z0-9*.!@#$%^&(){}[\]:;<>,.?/~_+\-=|]+$")
                             .hasMatch(value)) {
-                          return "Password Requirements:\n1 number\n1 lowercase letter\n1 uppercase letter\n1 special character\ncharacter length 8-32";
+                          return "Enter a valid password";
                         }
                         if (value != confirmPasswordController.text) {
                           return "Passwords must match";
@@ -179,7 +192,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => signup(),
                         child: Text(
                           'Sign up',
                           style: TextStyle(fontSize: 20),
@@ -188,6 +201,5 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ))),
     );
-    ;
   }
 }
