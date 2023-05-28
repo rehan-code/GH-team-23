@@ -92,8 +92,8 @@ class _ListingsPageState extends State<ListingsPage> {
               viewLeading: IconButton(
                   onPressed: () {
                     items.clear();
+                    controller.closeView("Search...");
                     controller.clear();
-                    controller.closeView("");
                   },
                   icon: Icon(Icons.arrow_back_rounded)),
               builder: (context, controller) {
@@ -223,70 +223,77 @@ class _ListingsPageState extends State<ListingsPage> {
                 itemBuilder: (context, index) {
                   final item = items.isEmpty ? listings[index] : items[index];
 
-                  return Card(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    child: Container(
-                      height: 130,
-                      width: 130,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Hero(
-                              tag: '${item.title}${item.description}',
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  // color: Theme.of(context)
-                                  //     .colorScheme
-                                  //     .primaryContainer,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(item.pictureFile.path))),
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ItemPage(listing: item))),
+                    child: Card(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      child: Container(
+                        height: 130,
+                        width: 130,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Hero(
+                                tag: '${item.title}${item.description}',
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    // color: Theme.of(context)
+                                    //     .colorScheme
+                                    //     .primaryContainer,
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: FileImage(
+                                            File(item.pictureFile.path))),
+                                  ),
+                                  height: 110,
+                                  width: 110,
                                 ),
-                                height: 110,
-                                width: 110,
                               ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${item.title[0].toUpperCase()}${item.title.substring(1)}',
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        item.description,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
-                                      ),
-                                    ],
+                              Expanded(
+                                child: Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${item.title[0].toUpperCase()}${item.title.substring(1)}',
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          item.description,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            // Spacer(),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                '\$${item.price}',
-                                style: TextStyle(fontSize: 18),
+                              // Spacer(),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Text(
+                                  '\$${item.price}',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
