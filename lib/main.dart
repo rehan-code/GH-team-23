@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:gh_app/view/pages/assets/camera_page.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
@@ -51,10 +52,16 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xff6A94FF)),
         // colorScheme: ColorScheme.light(),
         useMaterial3: true,
       ),
+      initialRoute: '/',
+      // routes: {
+      //   // When navigating to the "/" route, build the FirstScreen widget.
+      //   '/': (context) => const WelcomeScreen(),
+      //   // '/camera': (context) => const CameraPage(),
+      // },
       debugShowCheckedModeBanner: false,
       home: WelcomeScreen(),
     );

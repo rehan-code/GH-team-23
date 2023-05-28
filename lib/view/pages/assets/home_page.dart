@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: NavigationScreen(_bottomNavIndex),
       ),
       floatingActionButton: FloatingActionButton(
+        elevation: 3,
         shape: CircleBorder(),
         child: Icon(
           Icons.add,

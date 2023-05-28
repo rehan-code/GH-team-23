@@ -56,10 +56,8 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     void post() {
       if (formKey.currentState!.validate()) {
-        var startTime = DateTime.parse(
-            '${startDateController.text} ${startTimeController.text}');
-        var endTime = DateTime.parse(
-            '${endDateController.text} ${endTimeController.text}');
+        var startTime = DateTime.parse(startDateController.text);
+        var endTime = DateTime.parse(endDateController.text);
         if (pictureFile == null) {
           context.showErrorSnackBar(message: "Image required");
           return;
@@ -72,7 +70,8 @@ class _PostPageState extends State<PostPage> {
             startTime,
             endTime,
             pictureFile!,
-            user);
+            user,
+            ListingStatus.available);
 
         listings.add(listing);
         Navigator.pushReplacement(
@@ -89,7 +88,7 @@ class _PostPageState extends State<PostPage> {
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(35),
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,6 +132,7 @@ class _PostPageState extends State<PostPage> {
                       // : Image.file(File(pictureFile!.path)),
                     ),
                   ),
+                  SizedBox(height: 20),
                   TextFormField(
                     controller: titleController,
                     keyboardType: TextInputType.text,
@@ -148,7 +148,7 @@ class _PostPageState extends State<PostPage> {
                   ),
                   TextFormField(
                     controller: descriptionController,
-                    maxLines: 6,
+                    maxLines: 4,
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -243,54 +243,10 @@ class _PostPageState extends State<PostPage> {
                             }
                           },
                           decoration: const InputDecoration(
-                            labelText: 'start date',
+                            labelText: 'start availability',
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2 - 45,
-                        child: TextFormField(
-                          controller: startTimeController,
-                          keyboardType: TextInputType.none,
-                          validator: (value) {
-                            if (startTimeController.text == "") {
-                              return "Required";
-                            }
-                            // var today = DateTime.now();
-
-                            return null;
-                          },
-                          onTap: () async {
-                            TimeOfDay? pickedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                              builder: (BuildContext context, Widget? child) {
-                                return Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: child!,
-                                );
-                              },
-                            );
-                            if (pickedTime != null) {
-                              setState(() {
-                                startTimeController.text =
-                                    '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}';
-                              });
-                            } else if (mounted) {
-                              context.showErrorSnackBar(
-                                  message: 'required, hh:mm');
-                            }
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'start time',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
                       Container(
                         width: MediaQuery.of(context).size.width / 2 - 45,
                         child: TextFormField(
@@ -307,7 +263,7 @@ class _PostPageState extends State<PostPage> {
                               return "Date must be after today";
                             }
                             var startDate =
-                                DateTime.parse(endDateController.text);
+                                DateTime.parse(startDateController.text);
                             if (dob.difference(startDate).inDays < 0) {
                               return "Date must be after startDate";
                             }
@@ -330,50 +286,94 @@ class _PostPageState extends State<PostPage> {
                             }
                           },
                           decoration: const InputDecoration(
-                            labelText: 'start date',
+                            labelText: 'end availability',
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2 - 45,
-                        child: TextFormField(
-                          controller: endTimeController,
-                          keyboardType: TextInputType.none,
-                          validator: (value) {
-                            if (endTimeController.text == "") {
-                              return "Required";
-                            }
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width / 2 - 45,
+                      //   child: TextFormField(
+                      //     controller: startTimeController,
+                      //     keyboardType: TextInputType.none,
+                      //     validator: (value) {
+                      //       if (startTimeController.text == "") {
+                      //         return "Required";
+                      //       }
+                      //       // var today = DateTime.now();
 
-                            return null;
-                          },
-                          onTap: () async {
-                            TimeOfDay? pickedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                              builder: (BuildContext context, Widget? child) {
-                                return Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: child!,
-                                );
-                              },
-                            );
-                            if (pickedTime != null) {
-                              setState(() {
-                                endTimeController.text =
-                                    '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}';
-                              });
-                            } else if (mounted) {
-                              context.showErrorSnackBar(
-                                  message: 'required, hh:mm');
-                            }
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'start time',
-                          ),
-                        ),
-                      ),
+                      //       return null;
+                      //     },
+                      //     onTap: () async {
+                      //       TimeOfDay? pickedTime = await showTimePicker(
+                      //         context: context,
+                      //         initialTime: TimeOfDay.now(),
+                      //         builder: (BuildContext context, Widget? child) {
+                      //           return Directionality(
+                      //             textDirection: TextDirection.rtl,
+                      //             child: child!,
+                      //           );
+                      //         },
+                      //       );
+                      //       if (pickedTime != null) {
+                      //         setState(() {
+                      //           startTimeController.text =
+                      //               '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}';
+                      //         });
+                      //       } else if (mounted) {
+                      //         context.showErrorSnackBar(
+                      //             message: 'required, hh:mm');
+                      //       }
+                      //     },
+                      //     decoration: const InputDecoration(
+                      //       labelText: 'start time',
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 2 - 45,
+                  //   child: TextFormField(
+                  //     controller: endTimeController,
+                  //     keyboardType: TextInputType.none,
+                  //     validator: (value) {
+                  //       if (endTimeController.text == "") {
+                  //         return "Required";
+                  //       }
+
+                  //       return null;
+                  //     },
+                  //     onTap: () async {
+                  //       TimeOfDay? pickedTime = await showTimePicker(
+                  //         context: context,
+                  //         initialTime: TimeOfDay.now(),
+                  //         builder: (BuildContext context, Widget? child) {
+                  //           return Directionality(
+                  //             textDirection: TextDirection.rtl,
+                  //             child: child!,
+                  //           );
+                  //         },
+                  //       );
+                  //       if (pickedTime != null) {
+                  //         setState(() {
+                  //           endTimeController.text =
+                  //               '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}';
+                  //         });
+                  //       } else if (mounted) {
+                  //         context.showErrorSnackBar(
+                  //             message: 'required, hh:mm');
+                  //       }
+                  //     },
+                  //     decoration: const InputDecoration(
+                  //       labelText: 'start time',
+                  //     ),
+                  //   ),
+                  // ),
+                  //   ],
+                  // ),
                   // Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(50.0),

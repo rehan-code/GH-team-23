@@ -87,16 +87,19 @@ class ItemPage extends StatelessWidget {
           ),
         ),
         Divider(height: 1),
-        Padding(
-          padding: const EdgeInsets.all(14),
-          child: FittedBox(
-              // height: 150,
-              child: Text(
-            listing.description,
-            maxLines: 4,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
-          )),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: FittedBox(
+                // height: 150,
+                child: Text(
+              listing.description,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+            )),
+          ),
         ),
         Divider(),
         Spacer(),

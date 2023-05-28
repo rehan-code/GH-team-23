@@ -22,8 +22,9 @@ class ProfilePage extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            CircleAvatar(
-              radius: 75,
+            Icon(
+              Icons.account_circle_rounded,
+              size: 170,
             ),
             SizedBox(
               height: 15,
@@ -51,31 +52,29 @@ class ProfilePage extends StatelessWidget {
               height: 20,
             ),
             ListTile(
-                title: Text(
-              "My Rentals",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+              title: Text(
+                "My Rentals",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyRentals(),
-                  )
-              ),
+                  )),
             ),
             SizedBox(
               height: 20,
             ),
             ListTile(
-                title: Text(
-              "My Lent Items",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-                onTap: () => Navigator.push(
+              title: Text(
+                "My Listings",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyLent(),
-                  )
-              ),
+                  )),
             ),
             SizedBox(
               height: 20,
@@ -95,11 +94,12 @@ class ProfilePage extends StatelessWidget {
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
               ),
-              onTap: () => Navigator.pushReplacement(
+              onTap: () => Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => WelcomeScreen(),
-                  )),
+                  ),
+                  (Route<dynamic> route) => false),
             ),
           ],
         ),
