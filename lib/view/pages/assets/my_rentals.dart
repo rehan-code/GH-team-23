@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gh_app/core/listings.dart';
 import 'dart:io';
 import 'package:gh_app/view/pages/assets/item_page.dart';
+import 'package:gh_app/view/pages/assets/pickup_or_cancel.dart';
 
 //Need to modify account class to include a list of your personally rented items, using listing is just temporary
 
@@ -53,7 +54,7 @@ class _MyRentalsPage extends State<MyRentals>{
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ItemPage(
+                              builder: (context) => PickupOrCancel(
                                 listing: listing,
                               ))),
                       child: Card(
