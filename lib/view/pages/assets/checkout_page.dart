@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/listing.dart';
+import 'package:gh_app/view/pages/assets/pickup_or_cancel.dart';
 
 class CheckoutPage extends StatefulWidget {
   final Listing listing;
@@ -304,7 +305,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 SizedBox(height: 16),
 
                 ElevatedButton(
-                    onPressed: (DateTime.parse(endDateController.text).difference(DateTime.parse(startDateController.text))).inDays > 0 ? () {} : null,
+                    onPressed: (DateTime.parse(endDateController.text).difference(DateTime.parse(startDateController.text))).inDays > 0 ? () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PickupOrCancel( listing: widget.listing ) ))
+                    : null,
                     child: Text('Proceed')
                 ),
 
