@@ -7,6 +7,7 @@ import 'package:gh_app/core/accounts.dart';
 import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/listing.dart';
 import 'package:gh_app/core/listings.dart';
+import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/camera_page.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
 import 'package:image_picker/image_picker.dart';
@@ -70,7 +71,8 @@ class _PostPageState extends State<PostPage> {
             locationController.text,
             startTime,
             endTime,
-            pictureFile!);
+            pictureFile!,
+            user);
 
         listings.add(listing);
         Navigator.pushReplacement(
@@ -111,8 +113,8 @@ class _PostPageState extends State<PostPage> {
                     width: MediaQuery.of(context).size.width * 0.6,
                     height: MediaQuery.of(context).size.height * 0.3,
                     margin: EdgeInsets.only(top: 20),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
+                    child: FilledButton.tonal(
+                      style: FilledButton.styleFrom(
                           backgroundColor: Colors.transparent, elevation: 0),
                       onPressed: () async {
                         await availableCameras().then(
@@ -375,12 +377,17 @@ class _PostPageState extends State<PostPage> {
                   // Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(50.0),
-                    child: ElevatedButton(
+                    child: FilledButton.tonal(
                         onPressed: () => post(),
-                        child: Text(
-                          'Publish',
-                          style: TextStyle(fontSize: 20),
-                        )),
+                        child: Container(
+                            height: 50,
+                            width: 200,
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Publish',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w400),
+                            ))),
                   )
                 ],
               ),

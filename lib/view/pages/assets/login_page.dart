@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/account.dart';
 import 'package:gh_app/core/accounts.dart';
 import 'package:gh_app/core/constants.dart';
+import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     //   for (var element in accounts) {
     //     if (element.email == emailController.text &&
     //         element.password == passwordController.text) {
+    //       user = element;
     //       Navigator.push(
     //           context, MaterialPageRoute(builder: (context) => HomePage()));
     //     }
@@ -78,16 +81,21 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: ElevatedButton(
+                      child: FilledButton.tonal(
                           onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => HomePage(),
                               )),
-                          child: Text(
-                            'Login',
-                            style: TextStyle(fontSize: 20),
-                          )),
+                          child: Container(
+                              height: 50,
+                              width: 200,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w400),
+                              ))),
                     )
                   ],
                 ),

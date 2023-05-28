@@ -53,7 +53,7 @@ class _CameraPageState extends State<CameraPage> {
           padding: const EdgeInsets.all(8.0),
           child: Center(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height - 80,
+              height: MediaQuery.of(context).size.height - 84,
               width: 400,
               child: CameraPreview(controller),
             ),
@@ -61,7 +61,7 @@ class _CameraPageState extends State<CameraPage> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
+          child: FilledButton.tonal(
             onPressed: () async {
               pictureFile = await controller.takePicture();
               if (mounted) {
@@ -70,7 +70,14 @@ class _CameraPageState extends State<CameraPage> {
                 Navigator.pop(context);
               }
             },
-            child: Text('Capture Image'),
+            child: Container(
+                height: 50,
+                width: 200,
+                alignment: Alignment.center,
+                child: Text(
+                  'Capture Image',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                )),
           ),
         ),
         if (pictureFile != null) Image.file(File(pictureFile!.path))

@@ -3,14 +3,39 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/view/pages/assets/item_page.dart';
+import 'package:dart_openai/dart_openai.dart';
 
-class ListingsPage extends StatelessWidget {
+class ListingsPage extends StatefulWidget {
   const ListingsPage({super.key});
+
+  @override
+  State<ListingsPage> createState() => _ListingsPageState();
+}
+
+class _ListingsPageState extends State<ListingsPage> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: SearchBar(
+            leading: Icon(Icons.search_rounded),
+            controller: searchController,
+            hintText: 'AI Search',
+            shadowColor: MaterialStateProperty.resolveWith(
+                (states) => Colors.transparent),
+            // onChanged: ,
+          ),
+        ),
         for (var listing in listings)
           Padding(
             padding: const EdgeInsets.all(10),
@@ -31,42 +56,44 @@ class ListingsPage extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // color: Theme.of(context)
-                              //     .colorScheme
-                              //     .primaryContainer,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(
-                                      File(listing.pictureFile.path))),
+                          Hero(
+                            tag: '${listing.title}${listing.description}',
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                // color: Theme.of(context)
+                                //     .colorScheme
+                                //     .primaryContainer,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: FileImage(
+                                        File(listing.pictureFile.path))),
+                              ),
+                              height: 110,
+                              width: 110,
                             ),
-                            height: 110,
-                            width: 110,
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Expanded(
-                              child: Container(
+                          Expanded(
+                            child: Container(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      listing.title,
+                                      '${listing.title[0].toUpperCase()}${listing.title.substring(1)}',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
                                       style: TextStyle(
                                           fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        listing.description,
-                                        // overflow: TextOverflow.ellipsis,
-                                        // softWrap: false,
-                                        // maxLines: 1,
-                                      ),
+                                    Text(
+                                      listing.description,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 3,
                                     ),
                                   ],
                                 ),

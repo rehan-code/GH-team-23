@@ -26,20 +26,42 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: 40,
                         fontWeight: FontWeight.bold),
                   ),
-                  ElevatedButton(
+                  SizedBox(
+                    height: 80,
+                  ),
+                  FilledButton.tonal(
                       onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => LoginPage(),
                           )),
-                      child: Text('Login')),
-                  ElevatedButton(
+                      child: Container(
+                          height: 50,
+                          width: 200,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w400),
+                          ))),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FilledButton.tonal(
                       onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => SignupPage(),
                           )),
-                      child: Text('Signup'))
+                      child: Container(
+                          height: 50,
+                          width: 200,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Signup',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w400),
+                          )))
                 ],
               ),
             )

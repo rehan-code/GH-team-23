@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/user_details.dart';
+import 'package:gh_app/view/pages/assets/update_profile.dart';
+import 'package:gh_app/view/pages/assets/welcome_screen.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -7,113 +10,82 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title:
-            Text("Profile", style: Theme.of(context).textTheme.headlineMedium),
+            Text("PROFILE", style: Theme.of(context).textTheme.headlineMedium),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(35),
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: null,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: const Icon(
-                        Icons.edit,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                    ),
-                  )
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 75,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(user.name,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(
+              height: 60,
+            ),
+            ListTile(
+              title: Text(
+                "Edit Profile",
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
-              // Text("User name",
-              //     style: Theme.of(context).textTheme.headlineMedium),
-              // const SizedBox(height: 20),
-
-              // /// -- BUTTON
-              // SizedBox(
-              //   width: 200,
-              //   child: ElevatedButton(
-              //     onPressed: () => Get.to(() => const UpdateProfileScreen()),
-              //     style: ElevatedButton.styleFrom(
-              //         backgroundColor: tPrimaryColor,
-              //         side: BorderSide.none,
-              //         shape: const StadiumBorder()),
-              //     child: const Text(tEditProfile,
-              //         style: TextStyle(color: tDarkColor)),
-              //   ),
-              // ),
-              // const SizedBox(height: 30),
-              // const Divider(),
-              // const SizedBox(height: 10),
-
-              // /// -- MENU
-              // ProfileMenuWidget(
-              //     title: "Settings",
-              //     icon: LineAwesomeIcons.cog,
-              //     onPress: () {}),
-              // ProfileMenuWidget(
-              //     title: "Billing Details",
-              //     icon: LineAwesomeIcons.wallet,
-              //     onPress: () {}),
-              // ProfileMenuWidget(
-              //     title: "User Management",
-              //     icon: LineAwesomeIcons.user_check,
-              //     onPress: () {}),
-              // const Divider(),
-              // const SizedBox(height: 10),
-              // ProfileMenuWidget(
-              //     title: "Information",
-              //     icon: LineAwesomeIcons.info,
-              //     onPress: () {}),
-              // ProfileMenuWidget(
-              //     title: "Logout",
-              //     icon: LineAwesomeIcons.alternate_sign_out,
-              //     textColor: Colors.red,
-              //     endIcon: false,
-              //     onPress: () {
-              //       Get.defaultDialog(
-              //         title: "LOGOUT",
-              //         titleStyle: const TextStyle(fontSize: 20),
-              //         content: const Padding(
-              //           padding: EdgeInsets.symmetric(vertical: 15.0),
-              //           child: Text("Are you sure, you want to Logout?"),
-              //         ),
-              //         confirm: Expanded(
-              //           child: ElevatedButton(
-              //             onPressed: () =>
-              //                 AuthenticationRepository.instance.logout(),
-              //             style: ElevatedButton.styleFrom(
-              //                 backgroundColor: Colors.redAccent,
-              //                 side: BorderSide.none),
-              //             child: const Text("Yes"),
-              //           ),
-              //         ),
-              //         cancel: OutlinedButton(
-              //             onPressed: () => Get.back(), child: const Text("No")),
-              //       );
-              //     c}),
-            ],
-          ),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UpdateProfile(),
+                  )),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+                title: Text(
+              "My Rentals",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+                title: Text(
+              "My Lent Items",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+                title: Text(
+              "Account Balance",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app_rounded, color: Colors.red),
+              title: Text(
+                "Log Out",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+              ),
+              onTap: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WelcomeScreen(),
+                  )),
+            ),
+          ],
         ),
       ),
     );

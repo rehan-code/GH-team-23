@@ -191,7 +191,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Phone Number',
                       ),
                     ),
-                    ElevatedButton(
+                    FilledButton.tonal(
                         onPressed: () => signup(),
                         child: Text(
                           'Sign up',

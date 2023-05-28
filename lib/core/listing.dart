@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:gh_app/core/account.dart';
 
 class Listing {
   String title;
@@ -8,10 +9,11 @@ class Listing {
   DateTime startTime;
   DateTime endTime;
   XFile pictureFile;
+  Account account;
   // String category;
 
   Listing(this.title, this.description, this.price, this.location,
-      this.startTime, this.endTime, this.pictureFile);
+      this.startTime, this.endTime, this.pictureFile, this.account);
 
   Map<String, dynamic> toMap() {
     return {
