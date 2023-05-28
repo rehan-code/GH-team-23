@@ -6,6 +6,8 @@ import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/view/pages/assets/item_page.dart';
 import 'package:dart_openai/dart_openai.dart';
 
+import '../../../core/open_ai.dart';
+
 class ListingsPage extends StatefulWidget {
   const ListingsPage({super.key});
 
@@ -16,6 +18,17 @@ class ListingsPage extends StatefulWidget {
 class _ListingsPageState extends State<ListingsPage> {
   final TextEditingController searchController = TextEditingController();
   final SearchController controller = SearchController();
+  var url = Uri.parse('https://api.openai.com/v1/completions');
+  Map<String, String> headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+    'Charset': 'utf-8',
+    'Authorization': 'Bearer $apiKey'
+  };
+
+  var filteredList = listings
+      .where((element) => element.status == ListingStatus.available)
+      .toList();
+
   var items = [];
   var searchHistory = [];
 
@@ -47,16 +60,20 @@ class _ListingsPageState extends State<ListingsPage> {
     if (query.isEmpty) {
       setState(() {
         for (var listing in listings) {
-          items.clear();
-          items.add(listing);
+          if (listing.status == ListingStatus.available) {
+            items.clear();
+            items.add(listing);
+          }
         }
       });
     } else {
       setState(() {
         for (var listing in listings) {
           if (listing.title.toLowerCase().contains(query.toLowerCase())) {
-            items.clear();
-            items.add(listing);
+            if (listing.status == ListingStatus.available) {
+              items.clear();
+              items.add(listing);
+            }
           }
         }
       });
@@ -229,9 +246,10 @@ class _ListingsPageState extends State<ListingsPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: items.isEmpty ? listings.length : items.length,
+                itemCount: items.isEmpty ? filteredList.length : items.length,
                 itemBuilder: (context, index) {
-                  final item = items.isEmpty ? listings[index] : items[index];
+                  final item =
+                      items.isEmpty ? filteredList[index] : items[index];
 
                   return GestureDetector(
                     onTap: () => Navigator.push(
