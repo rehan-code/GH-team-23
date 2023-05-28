@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/update_profile.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
+import 'package:gh_app/view/pages/assets/my_rentals.dart';
+import 'package:gh_app/view/pages/assets/my_lent.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -52,7 +54,14 @@ class ProfilePage extends StatelessWidget {
                 title: Text(
               "My Rentals",
               style: TextStyle(fontWeight: FontWeight.bold),
-            )),
+            ),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyRentals(),
+                  )
+              ),
+            ),
             SizedBox(
               height: 20,
             ),
@@ -60,7 +69,14 @@ class ProfilePage extends StatelessWidget {
                 title: Text(
               "My Lent Items",
               style: TextStyle(fontWeight: FontWeight.bold),
-            )),
+            ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyLent(),
+                  )
+              ),
+            ),
             SizedBox(
               height: 20,
             ),
