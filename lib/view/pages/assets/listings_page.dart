@@ -18,12 +18,6 @@ class ListingsPage extends StatefulWidget {
 class _ListingsPageState extends State<ListingsPage> {
   final TextEditingController searchController = TextEditingController();
   final SearchController controller = SearchController();
-  var url = Uri.parse('https://api.openai.com/v1/completions');
-  Map<String, String> headers = {
-    'Content-Type': 'application/json;charset=UTF-8',
-    'Charset': 'utf-8',
-    'Authorization': 'Bearer $apiKey'
-  };
 
   var filteredList = listings
       .where((element) => element.status == ListingStatus.available)
@@ -108,22 +102,39 @@ class _ListingsPageState extends State<ListingsPage> {
               ],
               viewLeading: IconButton(
                   onPressed: () {
-                    items.clear();
-                    controller.closeView("Search...");
+                    controller.closeView("");
                     controller.clear();
+                    setState(() {
+                      items.clear();
+                    });
+                    // FocusScopeNode currentFocus = FocusScope.of(context);
+
+                    // if (!currentFocus.hasPrimaryFocus) {
+                    //   currentFocus.unfocus();
+                    // }
+                    // FocusManager.instance.primaryFocus?.unfocus();
                   },
                   icon: Icon(Icons.arrow_back_rounded)),
               builder: (context, controller) {
-                return SearchBar(
-                  leading: IconButton(
-                    icon: Icon(Icons.search_rounded),
-                    onPressed: () {},
+                // return SearchBar(
+                //   leading: IconButton(
+                //     icon: Icon(Icons.search_rounded),
+                //     onPressed: () {},
+                //   ),
+                //   hintText: 'AI Search',
+                //   onTap: () => controller.openView(),
+                //   shadowColor: MaterialStateProperty.resolveWith(
+                //       (states) => Colors.transparent),
+                // );
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35),
+                      color: Theme.of(context).colorScheme.secondaryContainer),
+                  child: ListTile(
+                    leading: Icon(Icons.search),
+                    title: Text('AI Search'),
+                    onTap: () => controller.openView(),
                   ),
-                  controller: controller,
-                  hintText: 'AI Search',
-                  onTap: () => controller.openView(),
-                  shadowColor: MaterialStateProperty.resolveWith(
-                      (states) => Colors.transparent),
                 );
               },
               suggestionsBuilder: (context, controller) {
