@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
 import 'package:gh_app/view/pages/assets/signup_page.dart';
@@ -18,6 +20,7 @@ class WelcomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 40),
+                  // Image.asset('lib/assets/images/logo.png', ),
                   Text(
                     'Lendr',
                     textAlign: TextAlign.center,

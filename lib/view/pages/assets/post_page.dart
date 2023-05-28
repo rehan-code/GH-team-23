@@ -143,6 +143,11 @@ class _PostPageState extends State<PostPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      // border: InputBorder.none,
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
                       labelText: 'Title',
                     ),
                   ),
@@ -157,6 +162,11 @@ class _PostPageState extends State<PostPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      // border: InputBorder.none,
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
                       labelText: 'Description',
                     ),
                   ),
@@ -176,6 +186,11 @@ class _PostPageState extends State<PostPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      // border: InputBorder.none,
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
                       labelText: 'Price',
                     ),
                   ),
@@ -189,6 +204,11 @@ class _PostPageState extends State<PostPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      // border: InputBorder.none,
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
                       labelText: 'Location',
                     ),
                   ),
@@ -202,6 +222,11 @@ class _PostPageState extends State<PostPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      // border: InputBorder.none,
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
                       labelText: 'Category',
                     ),
                   ),

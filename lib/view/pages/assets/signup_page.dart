@@ -95,9 +95,9 @@ class _SignupPageState extends State<SignupPage> {
                       decoration: InputDecoration(
                         // border: InputBorder.none,
                         border: OutlineInputBorder(),
-                        // filled: true,
-                        // fillColor:
-                        //     Theme.of(context).colorScheme.secondaryContainer,
+                        filled: true,
+                        fillColor:
+                            Theme.of(context).colorScheme.secondaryContainer,
                         labelText: 'Email',
                       ),
                     ),
@@ -151,8 +151,8 @@ class _SignupPageState extends State<SignupPage> {
                         return null;
                       },
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        // border: OutlineInputBorder(),
+                        // border: InputBorder.none,
+                        border: OutlineInputBorder(),
                         filled: true,
                         fillColor:
                             Theme.of(context).colorScheme.secondaryContainer,

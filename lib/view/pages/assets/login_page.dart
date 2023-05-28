@@ -62,6 +62,11 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       decoration: InputDecoration(
+                        // border: InputBorder.none,
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor:
+                            Theme.of(context).colorScheme.secondaryContainer,
                         labelText: 'Email',
                       ),
                     ),
@@ -76,6 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       decoration: InputDecoration(
+                        // border: InputBorder.none,
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor:
+                            Theme.of(context).colorScheme.secondaryContainer,
                         labelText: 'Password',
                       ),
                     ),

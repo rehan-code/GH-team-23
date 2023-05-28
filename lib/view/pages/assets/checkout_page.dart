@@ -109,7 +109,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 children: [
                   Expanded(
                       child: Text(
-                    "Select your renting duration between ${widget.listing.startTime.year}-${widget.listing.startTime.month}-${widget.listing.startTime.day} and ${widget.listing.endTime.year}-${widget.listing.endTime.month}-${widget.listing.endTime.day}",
+                    "Rental Period",
+                    // "Select your renting duration between ${widget.listing.startTime.year}-${widget.listing.startTime.month}-${widget.listing.startTime.day} and ${widget.listing.endTime.year}-${widget.listing.endTime.month}-${widget.listing.endTime.day}",
+
                     style: TextStyle(fontSize: 16),
                   ))
                 ],
@@ -118,8 +120,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     width: MediaQuery.of(context).size.width / 2 - 30,
                     child: TextFormField(
+                      textAlign: TextAlign.center,
                       controller: startDateController,
                       keyboardType: TextInputType.none,
                       validator: (value) {
@@ -159,13 +169,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         }
                       },
                       decoration: const InputDecoration(
-                        labelText: 'Start date',
-                      ),
+                          labelText: 'Start date', border: InputBorder.none),
                     ),
                   ),
                   Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     width: MediaQuery.of(context).size.width / 2 - 30,
                     child: TextFormField(
+                      textAlign: TextAlign.center,
                       controller: endDateController,
                       keyboardType: TextInputType.none,
                       validator: (value) {
@@ -209,8 +226,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         }
                       },
                       decoration: const InputDecoration(
-                        labelText: 'End date',
-                      ),
+                          labelText: 'End date', border: InputBorder.none),
                     ),
                   ),
                 ],

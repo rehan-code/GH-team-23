@@ -134,6 +134,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
               return null;
             },
             decoration: InputDecoration(
+              // border: InputBorder.none,
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.secondaryContainer,
               labelText: 'Password',
             ),
           ),
@@ -157,6 +161,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
               return null;
             },
             decoration: InputDecoration(
+              // border: InputBorder.none,
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.secondaryContainer,
               labelText: 'Confirm Password',
             ),
           ),
