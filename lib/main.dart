@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gh_app/view/pages/assets/camera_page.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
+import 'package:gh_app/view/pages/assets/splash_page.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 late List<CameraDescription> cameras;
 Future<void> main() async {
@@ -16,6 +18,14 @@ Future<void> main() async {
 
   // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.first;
+
+  //Supabase init
+  await Supabase.initialize(
+    url: 'https://wtczevzjfuhdanuakxbl.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0Y3pldnpqZnVoZGFudWFreGJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyMTkwMTYsImV4cCI6MjAwMDc5NTAxNn0.JH2Sx4nXSvtdfzD4i33vDyKNR9X28HgHWZFIwU_qj60',
+    authFlowType: AuthFlowType.pkce,
+  );
 
   runApp(const MyApp());
 }
@@ -63,7 +73,7 @@ class MyApp extends StatelessWidget {
       //   // '/camera': (context) => const CameraPage(),
       // },
       debugShowCheckedModeBanner: false,
-      home: WelcomeScreen(),
+      home: SplashPage(),
     );
   }
 }

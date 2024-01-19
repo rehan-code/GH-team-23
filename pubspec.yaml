@@ -30,9 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  camera:
-  path_provider:
-  path:
+  supabase_flutter: ^1.10.3
+  camera: ^0.10.5+4
+  path_provider: ^2.1.1
+  path: ^1.8.3
   image_picker: ^0.8.7+5
 
   animated_bottom_navigation_bar: ^1.2.0
