@@ -1,12 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/user_details.dart';
+import 'package:gh_app/view/pages/assets/login_page.dart';
 import 'package:gh_app/view/pages/assets/update_profile.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
 import 'package:gh_app/view/pages/assets/my_rentals.dart';
 import 'package:gh_app/view/pages/assets/my_lent.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  bool _loading = false;
+
+  Future<void> _signOut() async {
+    try {
+      await supabase.auth.signOut();
+    } on AuthException catch (error) {
+      context.showErrorSnackBar(message: error.message);
+    } catch (error) {
+      context.showErrorSnackBar(message: 'Unexpected error occurred');
+    } finally {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => WelcomeScreen()));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,12 +119,7 @@ class ProfilePage extends StatelessWidget {
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
               ),
-              onTap: () => Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomeScreen(),
-                  ),
-                  (Route<dynamic> route) => false),
+              onTap: () => _signOut(),
             ),
           ],
         ),
