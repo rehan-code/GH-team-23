@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gh_app/view/pages/assets/listings_page.dart';
+import 'package:gh_app/view/pages/assets/login_page.dart';
+import 'package:gh_app/view/pages/assets/my_lent.dart';
+import 'package:gh_app/view/pages/assets/my_rentals.dart';
 import 'package:gh_app/view/pages/assets/post_page.dart';
 import 'package:gh_app/view/pages/assets/profile_page.dart';
 
@@ -25,7 +28,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   // late CurvedAnimation borderRadiusCurve;
   // late AnimationController _hideBottomBarAnimationController;
 
-  final iconList = <IconData>[Icons.home_rounded, Icons.account_circle_rounded];
+  final iconList = <IconData>[Icons.home_rounded, Icons.handshake, Icons.chat_rounded, Icons.account_circle_rounded];
 
   @override
   void initState() {
@@ -227,9 +230,23 @@ class _NavigationScreenState extends State<NavigationScreen>
   Widget build(BuildContext context) {
     // final colors = Theme.of(context).extension<CustomColorsTheme>()!;
     return Container(
-      color: Theme.of(context).colorScheme.background,
-      child:
-          SafeArea(child: widget.index == 0 ? ListingsPage() : ProfilePage()),
+        color: Theme.of(context).colorScheme.background,
+        child:
+        SafeArea(
+          child: (() {
+            switch (widget.index) {
+              case 0:
+                return ListingsPage();
+              case 1:
+                return MyLent();
+              case 2:
+                return MyRentals();
+              default:
+                return ProfilePage();
+            }
+          })(),
+        )
+
       // child: ListView(
       //   children: [
       //     SizedBox(height: 64),
@@ -247,6 +264,9 @@ class _NavigationScreenState extends State<NavigationScreen>
       //     ),
       //   ],
       // ),
+
+      // SafeArea(child: widget.index == 0 ? ListingsPage() : ProfilePage()),
+
     );
   }
 }
