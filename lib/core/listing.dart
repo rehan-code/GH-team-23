@@ -29,6 +29,19 @@ class Listing {
       this.account,
       this.status);
 
+  Listing.from_map(Map<String, dynamic> listing)
+      : this(
+    listing['title'],
+    listing['description'],
+    listing['price'].toDouble(),
+    "Guelph, ON",
+    DateTime.parse(listing['availability_start']),
+    DateTime.parse(listing['availability_end']),
+    listing['image'],
+    listing['user_id'],
+    listing['status']
+  );
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,

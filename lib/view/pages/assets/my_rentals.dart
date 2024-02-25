@@ -57,6 +57,16 @@ class _MyRentalsPage extends State<MyRentals> {
           centerTitle: true,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           automaticallyImplyLeading: false,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.archive),
+              tooltip: 'Show archived posts',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('This is a snackbar')));
+              },
+            ),
+          ],
         ),
         body: SafeArea(
           child: Padding(

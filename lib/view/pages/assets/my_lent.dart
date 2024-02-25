@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/constants.dart';
+import 'package:gh_app/core/listing.dart';
 import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/confirm_pickup.dart';
@@ -16,6 +18,45 @@ class MyLent extends StatefulWidget {
 }
 
 class _MyLentItemsPage extends State<MyLent> {
+
+  bool _isLoading = false;
+
+  Future<void> getLendings()  async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      var myLendings = await supabase.from('item').select('*').eq('user_id', supabase.auth.currentUser!.id);
+
+      if (mounted) {
+        listings.clear();
+
+        for(var listing in myLendings) {
+
+          listings.add(Listing.from_map(listing));
+
+        }
+
+      }
+
+    } catch (error) {
+      context.showErrorSnackBar(message: 'Cant load listings');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    getLendings();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
