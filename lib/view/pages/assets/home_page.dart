@@ -238,9 +238,9 @@ class _NavigationScreenState extends State<NavigationScreen>
               case 0:
                 return ListingsPage();
               case 1:
-                return MyLent();
-              case 2:
                 return MyRentals();
+              case 2:
+                return MyLent();
               default:
                 return ProfilePage();
             }
