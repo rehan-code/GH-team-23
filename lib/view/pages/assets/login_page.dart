@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/account.dart';
 import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
@@ -32,7 +33,13 @@ class _LoginPageState extends State<LoginPage> {
       final response = await supabase.auth.signInWithPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
+      
+      var userDetails = await supabase.from('user').select('*').eq('id', response.user!.id);
+
       if (mounted) {
+        userDetails = userDetails[0];
+        user = Account(userDetails['first_name'], userDetails['last_name'], userDetails['email'], userDetails['id'], userDetails['mobile']);
+        // route to next page
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       }

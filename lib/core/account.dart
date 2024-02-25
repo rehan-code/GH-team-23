@@ -1,17 +1,19 @@
 class Account {
-  String name;
+  String firstName;
+  String lastName;
   String email;
-  String password;
+  String userID;
   String phone;
   // String category;
 
-  Account(this.name, this.email, this.password, this.phone);
+  Account(this.firstName, this.lastName, this.email, this.userID, this.phone);
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
+      'first_name': firstName,
+      'last_name': lastName,
       'email': email,
-      'password': password,
+      'user_id': userID,
       'phone': phone,
     };
   }

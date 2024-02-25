@@ -30,18 +30,21 @@ class _UpdateProfileState extends State<UpdateProfile> {
     phoneController.dispose();
   }
 
+  // wehere is this used and what is it for? password removed
   void editProfile() {
     if (_formKey.currentState!.validate()) {
       user = Account(
-          nameController.text.isNotEmpty ? nameController.text : user.name,
-          user.email,
-          passwordController.text.isNotEmpty
-              ? passwordController.text
-              : user.password,
-          phoneController.text.isNotEmpty ? phoneController.text : user.phone);
+          nameController.text.isNotEmpty ? nameController.text : user!.firstName,
+          nameController.text.isNotEmpty ? nameController.text : user!.lastName,
+          user!.email,
+          // passwordController.text.isNotEmpty
+          //     ? passwordController.text
+          //     : 'password', // changed from user.password
+          user!.userID,
+          phoneController.text.isNotEmpty ? phoneController.text : user!.phone);
       for (var element in accounts) {
-        if (element.email == user.email) {
-          element = user;
+        if (element.email == user!.email) {
+          element = user!;
         }
       }
       Navigator.pop(context);
