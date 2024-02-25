@@ -50,7 +50,7 @@ class _MyLentItemsPage extends State<MyLent> {
                 ],
               ),
               for (var listing in listings)
-                if (listing.account.email == user.email)
+                if (listing.account.email == user!.email)
                   GestureDetector(
                     onTap: () => Navigator.push(
                         context,

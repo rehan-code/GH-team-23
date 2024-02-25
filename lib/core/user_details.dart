@@ -1,3 +1,4 @@
 import 'package:gh_app/core/account.dart';
 
-Account user = Account('Name', 'email@email.com', 'password', '1231231234');
+Account user = Account('WName', 'LName', 'email@email.com', 'user_id', '1231231234'); //remove initialization in the future
+

@@ -54,7 +54,7 @@ class _PostPageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
-    void post() {
+    Future<void> post() async {
       if (formKey.currentState!.validate()) {
         var startTime = DateTime.parse(startDateController.text);
         var endTime = DateTime.parse(endDateController.text);
@@ -70,10 +70,25 @@ class _PostPageState extends State<PostPage> {
             startTime,
             endTime,
             pictureFile!,
-            user,
+            user!,
             ListingStatus.available);
 
-        listings.add(listing);
+        listings.add(listing); // delete when database added
+
+        //add database insert
+        final newListing = {
+          'user_id': user!.userID,
+          'title': titleController.text.trim(),
+          'description': descriptionController.text,
+          'price': double.parse(priceController.text),
+          'location': locationController.text,
+          'status': ListingStatus.available,
+          'availability_start': startTime,
+          'availability_end': endTime,
+          // 'image': 'figure this out', // figure out using buckets
+        };
+        await supabase.from('item').insert(newListing);
+
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
         if (mounted) {
