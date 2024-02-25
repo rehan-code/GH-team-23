@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:gh_app/core/account.dart';
+import 'package:gh_app/core/user_details.dart';
 
 enum ListingStatus { available, unavailable }
 
@@ -37,9 +38,9 @@ class Listing {
     "Guelph, ON",
     DateTime.parse(listing['availability_start']),
     DateTime.parse(listing['availability_end']),
-    listing['image'],
-    listing['user_id'],
-    listing['status']
+    XFile('lib/assets/images/logo.png'),
+    user,
+    ListingStatus.available
   );
 
   Map<String, dynamic> toMap() {

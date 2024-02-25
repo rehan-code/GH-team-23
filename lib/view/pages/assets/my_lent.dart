@@ -40,8 +40,8 @@ class _MyLentItemsPage extends State<MyLent> {
 
       }
 
-    } catch (error) {
-      context.showErrorSnackBar(message: 'Cant load listings');
+    // } catch (error) {
+    //   context.showErrorSnackBar(message: 'Cant load listings');
     } finally {
       if (mounted) {
         setState(() {
