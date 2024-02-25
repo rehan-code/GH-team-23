@@ -77,15 +77,16 @@ class _PostPageState extends State<PostPage> {
 
         //add database insert
         final newListing = {
-          'user_id': user!.userID,
+          'user_id': supabase.auth.currentUser!.id,
           'title': titleController.text.trim(),
           'description': descriptionController.text,
+          'image': '', // figure out using buckets
           'price': double.parse(priceController.text),
-          'location': locationController.text,
-          'status': ListingStatus.available,
-          'availability_start': startTime,
-          'availability_end': endTime,
-          // 'image': 'figure this out', // figure out using buckets
+          'status': ListingStatus.available.toString(),
+          'availability_start': startDateController.text,
+          'availability_end': endDateController.text,
+          'safetyDeposit': 0.0,
+          // 'location': locationController.text,
         };
         await supabase.from('item').insert(newListing);
 
