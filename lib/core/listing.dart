@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:gh_app/core/account.dart';
+import 'package:gh_app/core/user_details.dart';
 
 enum ListingStatus { available, unavailable }
 
@@ -28,6 +29,19 @@ class Listing {
       this.pictureFile,
       this.account,
       this.status);
+
+  Listing.from_map(Map<String, dynamic> listing)
+      : this(
+    listing['title'],
+    listing['description'],
+    listing['price'].toDouble(),
+    "Guelph, ON",
+    DateTime.parse(listing['availability_start']),
+    DateTime.parse(listing['availability_end']),
+    XFile('lib/assets/images/logo.png'),
+    user,
+    ListingStatus.available
+  );
 
   Map<String, dynamic> toMap() {
     return {
