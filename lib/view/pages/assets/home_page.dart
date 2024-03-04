@@ -4,8 +4,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gh_app/view/pages/assets/listings_page.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
-import 'package:gh_app/view/pages/assets/my_lent.dart';
-import 'package:gh_app/view/pages/assets/my_rentals.dart';
+import 'package:gh_app/view/pages/assets/my_lendings.dart';
+import 'package:gh_app/view/pages/assets/my_listings.dart';
 import 'package:gh_app/view/pages/assets/post_page.dart';
 import 'package:gh_app/view/pages/assets/profile_page.dart';
 
@@ -238,9 +238,9 @@ class _NavigationScreenState extends State<NavigationScreen>
               case 0:
                 return ListingsPage();
               case 1:
-                return MyRentals();
+                return MyListingsPage();
               case 2:
-                return MyLent();
+                return MyLendingsPage();
               default:
                 return ProfilePage();
             }

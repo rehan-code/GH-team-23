@@ -4,8 +4,8 @@ import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
 import 'package:gh_app/view/pages/assets/update_profile.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
-import 'package:gh_app/view/pages/assets/my_rentals.dart';
-import 'package:gh_app/view/pages/assets/my_lent.dart';
+import 'package:gh_app/view/pages/assets/my_listings.dart';
+import 'package:gh_app/view/pages/assets/my_lendings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyRentals(),
+                    builder: (context) => MyListingsPage(),
                   )),
             ),
             SizedBox(
@@ -98,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyLent(),
+                    builder: (context) => MyLendingsPage(),
                   )),
             ),
             SizedBox(

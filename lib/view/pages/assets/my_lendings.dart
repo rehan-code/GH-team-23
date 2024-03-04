@@ -1,30 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/listing.dart';
 import 'package:gh_app/core/listings.dart';
+import 'package:gh_app/core/user_details.dart';
+import 'package:gh_app/view/pages/assets/confirm_pickup.dart';
 import 'dart:io';
+import 'package:gh_app/view/pages/assets/item_page.dart';
 
-import 'package:gh_app/view/pages/assets/return_page.dart';
+//Need to modify account class to include a list of your personally lent items, using listing is just temporary
+//Need to maintain 2 lists, a rented list and a lent list
 
-class MyBorrowings extends StatefulWidget {
-  const MyBorrowings({super.key});
+class MyLendingsPage extends StatefulWidget {
+  const MyLendingsPage({super.key});
 
   @override
-  State<MyBorrowings> createState() => _MyBorrowingsPage();
+  State<MyLendingsPage> createState() => _MyLendingsPageState();
 }
 
-class _MyBorrowingsPage extends State<MyBorrowings> {
+class _MyLendingsPageState extends State<MyLendingsPage> {
+
+  bool _isLoading = false;
+
+  // Future<void> getLendings()  async {
+  //   try {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+
+  //     var myLendings = await supabase.from('item').select('*').eq('user_id', supabase.auth.currentUser!.id);
+
+  //     if (mounted) {
+  //       listings.clear();
+
+  //       for(var listing in myLendings) {
+
+  //         listings.add(Listing.from_map(listing));
+
+  //       }
+
+  //     }
+
+  //   } catch (error) {
+  //     context.showErrorSnackBar(message: 'Cant load listings');
+  //   } finally {
+  //     if (mounted) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     }
+  //   }
+  // }
+
+  @override
+  void initState() {
+    // getLendings();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        for (var listing in myRentals)
-          if (listing.status == ListingStatus.unavailable)
+        for (var listing in myListings)
+          if (listing.account.email == user.email)
             GestureDetector(
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          ReturnPage(listing: listing))),
+                      builder: (context) => ConfirmPickup(
+                        listing: listing,
+                      ))),
               child: Card(
                   color: Theme.of(context).colorScheme.primaryContainer,
                   child: Container(
@@ -33,12 +78,15 @@ class _MyBorrowingsPage extends State<MyBorrowings> {
                     child: Card(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
+                                // color: Theme.of(context)
+                                //     .colorScheme
+                                //     .primaryContainer,
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: FileImage(
@@ -57,7 +105,7 @@ class _MyBorrowingsPage extends State<MyBorrowings> {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
-                                  children: [
+                                  children: <Widget>[
                                     Text(
                                       '${listing.title[0].toUpperCase()}${listing.title.substring(1)}',
                                       overflow: TextOverflow.ellipsis,
@@ -91,5 +139,4 @@ class _MyBorrowingsPage extends State<MyBorrowings> {
       ],
     );
   }
-
 }

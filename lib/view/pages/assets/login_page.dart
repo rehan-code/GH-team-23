@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     passwordController.dispose();
   }
 
-    Future<void> getListings()  async {
+  Future<void> getListings()  async {
     try {
       setState(() {
         _isLoading = true;
@@ -37,21 +37,19 @@ class _LoginPageState extends State<LoginPage> {
 
       if (mounted) {
         listings.clear();
+        myListings.clear();
+        myRentals.clear();
 
         for(var listing in allListings) {
-          
           if(listing["user_id"] == supabase.auth.currentUser!.id) {
-
+            myListings.add(Listing.from_map(listing, user));
+          } else {
             listings.add(Listing.from_map(listing, user));
-
           }
-
         }
-
       }
-
     } catch (error) {
-      context.showErrorSnackBar(message: 'Cant load listings');
+      mounted ? context.showErrorSnackBar(message: 'Cant load listings') : null;
     } finally {
       if (mounted) {
         setState(() {
@@ -75,9 +73,13 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         userDetails = userDetails[0];
         user = Account(userDetails['first_name'], userDetails['last_name'], userDetails['email'], userDetails['id'], userDetails['mobile']);
-        // route to next page
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        
+        await getListings();
+        if (mounted) {
+          // route to next page
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        }
       }
     } on AuthException catch (error) {
       context.showErrorSnackBar(message: error.message);
