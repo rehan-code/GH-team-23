@@ -34,7 +34,7 @@ class _MyLentItemsPage extends State<MyLent> {
 
         for(var listing in myLendings) {
 
-          listings.add(Listing.from_map(listing));
+          listings.add(Listing.fromMap(listing));
 
         }
 
