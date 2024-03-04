@@ -30,7 +30,7 @@ class Listing {
       this.account,
       this.status);
 
-  Listing.from_map(Map<String, dynamic> listing)
+  Listing.from_map(Map<String, dynamic> listing, Account user)
       : this(
     listing['title'],
     listing['description'],

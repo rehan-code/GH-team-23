@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gh_app/core/account.dart';
 import 'package:gh_app/core/constants.dart';
+import 'package:gh_app/core/listing.dart';
+import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,6 +25,40 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+  }
+
+    Future<void> getListings()  async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      var allListings = await supabase.from('item').select('*');
+
+      if (mounted) {
+        listings.clear();
+
+        for(var listing in allListings) {
+          
+          if(listing["user_id"] == supabase.auth.currentUser!.id) {
+
+            listings.add(Listing.from_map(listing, user));
+
+          }
+
+        }
+
+      }
+
+    } catch (error) {
+      context.showErrorSnackBar(message: 'Cant load listings');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   Future<void> login() async {
