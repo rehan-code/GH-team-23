@@ -44,8 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: ListView(
           children: [
             Icon(
               Icons.account_circle_rounded,
@@ -55,6 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 15,
             ),
             Text(user!.firstName,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -120,6 +121,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
               ),
               onTap: () => _signOut(),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              leading: Icon(Icons.refresh),
+              title: Text(
+                "refresh listings",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () => LoginPage.getListings(context),
             ),
           ],
         ),
