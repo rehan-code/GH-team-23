@@ -63,6 +63,7 @@ class _PostPageState extends State<PostPage> {
           return;
         }
         Listing listing = Listing(
+            '',
             titleController.text,
             descriptionController.text,
             double.parse(priceController.text),
