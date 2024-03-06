@@ -5,7 +5,6 @@ import 'package:gh_app/core/listing.dart';
 import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/view/pages/assets/item_page.dart';
 import 'package:dart_openai/dart_openai.dart';
-
 import '../../../core/open_ai.dart';
 
 class ListingsPage extends StatefulWidget {
@@ -22,7 +21,6 @@ class _ListingsPageState extends State<ListingsPage> {
   var filteredList = listings
       .where((element) => element.status == ListingStatus.available)
       .toList();
-
   var items = [];
   var searchHistory = [];
 

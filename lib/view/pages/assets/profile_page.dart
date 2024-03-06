@@ -4,8 +4,8 @@ import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
 import 'package:gh_app/view/pages/assets/update_profile.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
-import 'package:gh_app/view/pages/assets/my_rentals.dart';
-import 'package:gh_app/view/pages/assets/my_lent.dart';
+import 'package:gh_app/view/pages/assets/my_listings.dart';
+import 'package:gh_app/view/pages/assets/my_lendings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -44,8 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: ListView(
           children: [
             Icon(
               Icons.account_circle_rounded,
@@ -55,6 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 15,
             ),
             Text(user!.firstName,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -84,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyRentals(),
+                    builder: (context) => MyListingsPage(),
                   )),
             ),
             SizedBox(
@@ -98,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyLent(),
+                    builder: (context) => MyLendingsPage(),
                   )),
             ),
             SizedBox(
@@ -120,6 +121,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
               ),
               onTap: () => _signOut(),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              leading: Icon(Icons.refresh),
+              title: Text(
+                "refresh listings",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () => LoginPage.getListings(context),
             ),
           ],
         ),

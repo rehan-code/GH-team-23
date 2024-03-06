@@ -5,6 +5,7 @@ import 'package:gh_app/core/user_details.dart';
 enum ListingStatus { available, unavailable }
 
 class Listing {
+  String? id;
   String title;
   String description;
   double price;
@@ -20,6 +21,7 @@ class Listing {
   // String category;
 
   Listing(
+      this.id,
       this.title,
       this.description,
       this.price,
@@ -30,8 +32,9 @@ class Listing {
       this.account,
       this.status);
 
-  Listing.fromMap(Map<String, dynamic> listing)
+  Listing.from_map(Map<String, dynamic> listing, Account user)
       : this(
+    listing['id'],
     listing['title'],
     listing['description'],
     listing['price'].toDouble(),
@@ -45,6 +48,7 @@ class Listing {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'price': price,
