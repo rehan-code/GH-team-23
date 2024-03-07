@@ -19,7 +19,7 @@ class MyLendingsPage extends StatefulWidget {
 
 class _MyLendingsPageState extends State<MyLendingsPage> {
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   // Future<void> getLendings()  async {
   //   try {
@@ -72,7 +72,7 @@ class _MyLendingsPageState extends State<MyLendingsPage> {
                       ))),
               child: Card(
                   color: Theme.of(context).colorScheme.primaryContainer,
-                  child: Container(
+                  child: SizedBox(
                     height: 130,
                     width: MediaQuery.of(context).size.width,
                     child: Card(
@@ -110,7 +110,7 @@ class _MyLendingsPageState extends State<MyLendingsPage> {
                                       '${listing.title[0].toUpperCase()}${listing.title.substring(1)}',
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.deepPurple,
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
@@ -118,9 +118,9 @@ class _MyLendingsPageState extends State<MyLendingsPage> {
                                       textAlign: TextAlign.left,
                                     ),
                                     Text(
-                                      "${listing.description}",
+                                      listing.description,
                                       softWrap: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 14,
                                       ),

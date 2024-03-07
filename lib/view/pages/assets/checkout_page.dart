@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/listing.dart';
+import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/view/pages/assets/pickup_or_cancel.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   var startDateController = TextEditingController();
   var endDateController = TextEditingController();
+  var  _isLoading = false;
 
   int getNumDays() {
     return startDateController.text.isEmpty || endDateController.text.isEmpty
@@ -23,6 +25,49 @@ class _CheckoutPageState extends State<CheckoutPage> {
         : (DateTime.parse(endDateController.text)
                 .difference(DateTime.parse(startDateController.text)))
             .inDays;
+  }
+
+    Future<void> rentItem(BuildContext context)  async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      
+      await supabase.from('order').insert({
+        'item_id': widget.listing.id,
+        'renter_id': supabase.auth.currentUser!.id,
+        'rent_start_date': startDateController.text,
+        'rent_end_date': endDateController.text,
+        'price': widget.listing.price,
+        'pickup_location': 'Guelph'
+        });
+
+
+      if (context.mounted) {
+        widget.listing.startRental(
+            DateTime.parse(startDateController.text),
+            DateTime.parse(endDateController.text));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    PickupOrCancel(listing: widget.listing)));
+
+        print(listings);
+        listings.remove(widget.listing);
+        print(listings);
+        myRentals.add(widget.listing);
+
+      }
+    // } catch (error) {
+    //   context.mounted ? context.showErrorSnackBar(message: 'unexpected error occured') : null;
+    } finally {
+      if (context.mounted) {
+        // setState(() {
+        //   _isLoading = false;
+        // });
+      }
+    }
   }
 
   @override
@@ -312,17 +357,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               Spacer(),
               FilledButton.tonal(
                 onPressed: getNumDays() > 0
-                    ? () {
-                        widget.listing.startRental(
-                            DateTime.parse(startDateController.text),
-                            DateTime.parse(endDateController.text));
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    PickupOrCancel(listing: widget.listing)));
-                      }
-                    : null,
+                    ? () => rentItem(context) : null,
                 child: Container(
                     height: 50,
                     width: 200,

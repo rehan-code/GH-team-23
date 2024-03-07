@@ -63,6 +63,7 @@ class _PostPageState extends State<PostPage> {
           return;
         }
         Listing listing = Listing(
+            '',
             titleController.text,
             descriptionController.text,
             double.parse(priceController.text),
@@ -82,7 +83,7 @@ class _PostPageState extends State<PostPage> {
           'description': descriptionController.text,
           'image': '', // figure out using buckets
           'price': double.parse(priceController.text),
-          'status': ListingStatus.available.toString(),
+          'status': ListingStatus.available.name.toString(),
           'availability_start': startDateController.text,
           'availability_end': endDateController.text,
           'safetyDeposit': 0.0,
