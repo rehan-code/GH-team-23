@@ -1,11 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:gh_app/core/borrowing_list_provider.dart';
 import 'package:gh_app/view/pages/assets/camera_page.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
 import 'package:gh_app/view/pages/assets/login_page.dart';
 import 'package:gh_app/view/pages/assets/splash_page.dart';
 import 'package:gh_app/view/pages/assets/welcome_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
 
 late List<CameraDescription> cameras;
 Future<void> main() async {
@@ -24,10 +26,15 @@ Future<void> main() async {
     url: 'https://wtczevzjfuhdanuakxbl.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0Y3pldnpqZnVoZGFudWFreGJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyMTkwMTYsImV4cCI6MjAwMDc5NTAxNn0.JH2Sx4nXSvtdfzD4i33vDyKNR9X28HgHWZFIwU_qj60',
-    authFlowType: AuthFlowType.pkce,
+    // authFlowType: AuthFlowType.pkce,
   );
 
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => BorrowingList()),
+    ],
+    child: const MyApp()
+    ));
 }
 
 class MyApp extends StatelessWidget {
@@ -62,7 +69,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xff6A94FF)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff6A94FF)),
         // colorScheme: ColorScheme.light(),
         useMaterial3: true,
       ),
@@ -73,7 +80,7 @@ class MyApp extends StatelessWidget {
       //   // '/camera': (context) => const CameraPage(),
       // },
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      home: const SplashPage(),
     );
   }
 }

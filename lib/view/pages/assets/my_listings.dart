@@ -40,7 +40,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
     //       ),
     //     ],
     //   ),
-      body:
+      // body:
     // );
 
     return DefaultTabController(
@@ -68,10 +68,10 @@ class _MyListingsPageState extends State<MyListingsPage> {
             ),
           ],
         ),
-        body: SafeArea(
+        body: const SafeArea(
           child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: const TabBarView(
+              padding: EdgeInsets.all(14),
+              child: TabBarView(
                 children: [
                   MyBorrowings(),
                   MyLendingsPage(),

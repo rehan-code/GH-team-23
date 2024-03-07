@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gh_app/core/account.dart';
+import 'package:gh_app/core/borrowing_list_provider.dart';
 import 'package:gh_app/core/constants.dart';
 import 'package:gh_app/core/listing.dart';
 import 'package:gh_app/core/listings.dart';
 import 'package:gh_app/core/user_details.dart';
 import 'package:gh_app/view/pages/assets/home_page.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +14,26 @@ class LoginPage extends StatefulWidget {
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
+  static Future<void> getBorrowingList(BuildContext context)  async {
+    // try {
+      var allListings = await supabase.from('order').select('*, item:item_id ( * )').eq('renter_id', supabase.auth.currentUser!.id);
+      print(allListings);
+      if (context.mounted) {
+        context.read<BorrowingList>().clearList();
+
+        
+        for(var listing in allListings) {
+          context.read<BorrowingList>().addItemFromMap(listing['item'], user);
+        }
+        print('test');
+        print(context.read<BorrowingList>().borrowingList);
+      }
+    // } catch (error) {
+    //   context.mounted ? context.showErrorSnackBar(message: 'Cant get Borrowing list') : null;
+    // }
+  }
+
   static Future<void> getListings(BuildContext context)  async {
     try {
     //   setState(() {
@@ -21,9 +43,9 @@ class LoginPage extends StatefulWidget {
       var allListings = await supabase.from('item').select('*');
 
       if (context.mounted) {
+        getBorrowingList(context);
         listings.clear();
         myListings.clear();
-        myRentals.clear();
 
         for(var listing in allListings) {
           if(listing["user_id"] == supabase.auth.currentUser!.id) {
@@ -33,14 +55,9 @@ class LoginPage extends StatefulWidget {
           }
         }
       }
+
     } catch (error) {
       context.mounted ? context.showErrorSnackBar(message: 'Cant load listings') : null;
-    } finally {
-      if (context.mounted) {
-        // setState(() {
-        //   _isLoading = false;
-        // });
-      }
     }
   }
 }
@@ -69,17 +86,17 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
       
-      var userDetails = await supabase.from('user').select('*').eq('id', response.user!.id);
+      var userDetailsList = await supabase.from('user').select('*').eq('id', response.user!.id);
+      var userDetails = userDetailsList[0];
 
       if (mounted) {
-        userDetails = userDetails[0];
         user = Account(userDetails['first_name'], userDetails['last_name'], userDetails['email'], userDetails['id'], userDetails['mobile']);
         
         await LoginPage.getListings(context);
         if (mounted) {
           // route to next page
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => const HomePage()));
         }
       }
     } on AuthException catch (error) {
@@ -117,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       decoration: InputDecoration(
                         // border: InputBorder.none,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         filled: true,
                         fillColor:
                             Theme.of(context).colorScheme.secondaryContainer,
@@ -136,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       decoration: InputDecoration(
                         // border: InputBorder.none,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         filled: true,
                         fillColor:
                             Theme.of(context).colorScheme.secondaryContainer,
@@ -151,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 50,
                               width: 200,
                               alignment: Alignment.center,
-                              child: Text(
+                              child: const Text(
                                 'Login',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w400),
@@ -164,13 +181,13 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => const HomePage(),
                               )),
                           child: Container(
                               height: 50,
                               width: 200,
                               alignment: Alignment.center,
-                              child: Text(
+                              child: const Text(
                                 'Login bypass',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w400),
