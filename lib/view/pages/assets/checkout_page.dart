@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,52 @@ class _CheckoutPageState extends State<CheckoutPage> {
   var startDateController = TextEditingController();
   var endDateController = TextEditingController();
   var  _isLoading = false;
+  List<dynamic> bookedDates = []; 
+
+
+  @override
+  void initState() {
+    super.initState();
+    getBookedDates();
+  }
+
+  Future<void> getBookedDates() async {
+
+    try {
+    
+      var itemBookings = await supabase.from('order').select('rent_start_date, rent_end_date').eq('item_id', widget.listing.id);
+
+      if(context.mounted) {
+        setState(() {
+          bookedDates.clear();
+          bookedDates.addAll(itemBookings);
+        });
+      }
+
+    // } catch (error) {
+    //   context.mounted ? context.showErrorSnackBar(message: 'Cant get booking dates') : null;
+    } finally {
+      if (context.mounted) {
+        // setState(() {
+        //   _isLoading = false;
+        // });
+      }
+    }
+
+  }
+
+  bool _predicate(DateTime day) {
+    
+    for(var date in bookedDates) {
+
+      if ((day.isAfter(DateTime.parse(date['rent_start_date']).toLocal()) && day.isBefore(DateTime.parse(date['rent_end_date']).toLocal().add(Duration(days: 1))))) {
+        return false;
+      }
+
+    }
+
+    return true;
+  }
 
   int getNumDays() {
     return startDateController.text.isEmpty || endDateController.text.isEmpty
@@ -28,47 +75,47 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
     Future<void> rentItem(BuildContext context)  async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      
-      await supabase.from('order').insert({
-        'item_id': widget.listing.id,
-        'renter_id': supabase.auth.currentUser!.id,
-        'rent_start_date': startDateController.text,
-        'rent_end_date': endDateController.text,
-        'price': widget.listing.price,
-        'pickup_location': 'Guelph'
+      try {
+        setState(() {
+          _isLoading = true;
         });
+        
+        await supabase.from('order').insert({
+          'item_id': widget.listing.id,
+          'renter_id': supabase.auth.currentUser!.id,
+          'rent_start_date': startDateController.text,
+          'rent_end_date': endDateController.text,
+          'price': widget.listing.price,
+          'pickup_location': 'Guelph'
+          });
 
 
-      if (context.mounted) {
-        widget.listing.startRental(
-            DateTime.parse(startDateController.text),
-            DateTime.parse(endDateController.text));
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    PickupOrCancel(listing: widget.listing)));
+        if (context.mounted) {
+          widget.listing.startRental(
+              DateTime.parse(startDateController.text),
+              DateTime.parse(endDateController.text));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      PickupOrCancel(listing: widget.listing)));
 
-        print(listings);
-        listings.remove(widget.listing);
-        print(listings);
-        myRentals.add(widget.listing);
+          print(listings);
+          listings.remove(widget.listing);
+          print(listings);
+          myRentals.add(widget.listing);
 
-      }
-    // } catch (error) {
-    //   context.mounted ? context.showErrorSnackBar(message: 'unexpected error occured') : null;
-    } finally {
-      if (context.mounted) {
-        // setState(() {
-        //   _isLoading = false;
-        // });
+        }
+      // } catch (error) {
+      //   context.mounted ? context.showErrorSnackBar(message: 'unexpected error occured') : null;
+      } finally {
+        if (context.mounted) {
+          // setState(() {
+          //   _isLoading = false;
+          // });
+        }
       }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +239,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                           context: context,
+                          selectableDayPredicate: _predicate,
                           initialDate:
                               DateTime.now().isAfter(widget.listing.startTime)
                                   ? DateTime.now()
@@ -250,6 +298,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                           context: context,
+                          selectableDayPredicate: _predicate,
                           initialDate:
                               DateTime.now().isAfter(widget.listing.startTime)
                                   ? DateTime.now()
