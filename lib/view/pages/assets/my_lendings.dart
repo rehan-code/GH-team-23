@@ -62,7 +62,7 @@ class _MyLendingsPageState extends State<MyLendingsPage> {
     return ListView(
       children: [
         for (var listing in myListings)
-          if (listing.account.email == user.email)
+          if (listing.account.userID == user.userID)
             GestureDetector(
               onTap: () => Navigator.push(
                   context,
