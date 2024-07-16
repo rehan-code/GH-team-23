@@ -20,6 +20,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   var endDateController = TextEditingController();
   var  _isLoading = false;
   List<dynamic> bookedDates = []; 
+  DateTime earliestAllowableDate = DateTime.now();
 
 
   @override
@@ -41,8 +42,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
         });
       }
 
-    // } catch (error) {
-    //   context.mounted ? context.showErrorSnackBar(message: 'Cant get booking dates') : null;
+      
+
+    } catch (error) {
+      context.mounted ? context.showErrorSnackBar(message: 'Cant get booking dates') : null;
     } finally {
       if (context.mounted) {
         // setState(() {
